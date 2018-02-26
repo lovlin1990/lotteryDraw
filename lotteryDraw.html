@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>抽奖</title>
+<link rel="stylesheet" href="css/buttons.css" />
+<style>
+	body{margin:0;overflow:hidden;}
+	.bodyBg{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: url(images/bg.jpg) no-repeat center center;
+		background-size: 100% 100%;
+	}
+	.personBox{
+		width: 350px;
+		height: 480px;
+		margin: 130px auto 0px auto;
+	}
+	.personBox .personName{
+		font-size:30px;
+		width: 350px;
+		margin-top:10px;
+		text-align:center;
+	}
+	.buttonBox{
+		width: 350px;
+		height: 50px;
+		margin: 80px auto;
+		text-align:center;
+	}
+	.button-circle.button-large, .button-box.button-large, .button-square.button-large{
+		width: 120px;
+		margin-left:10px;
+	}
+	.marqueeStyle{
+		position:absolute;
+		margin:20px 100px;
+	}
+	.marqueeText{
+		font-weight: bolder;font-size: 45px;color: #FDD603;
+	}
+	.jackpotDiv{
+		margin:10px 5px;
+		text-align:center;
+		color: #FDD603;
+		font-size:20px;
+	}
+	.jackpotBox{
+		position:absolute;
+		bottom:50px;
+		right:200px;
+		width: 300px;
+		height: 300px;
+		border: 1px solid #FDD603;
+		
+	}
+</style>
+</head>
+ 
+<body>
+	<div class="bodyBg">
+		<marquee class="marqueeStyle" direction="left"><span class="marqueeText">抽奖开始!</span></marquee>
+		<div class="personBox">
+			<img width="100%" height="100%" src='person/张三.jpg'></img>
+			<div class="personName">张三</div>
+		</div>
+		<div class="jackpotBox">
+			<div class="jackpotDiv" style="font-size:23px;">===获奖名单===</div>
+			<div class="jackpotList"></div>
+		</div>
+		<div class="buttonBox">
+			<button class="button button-highlight button-box  button-large" id="start" disabled="disabled">开始</button>
+			<button class="button button-highlight button-box button-large" id="stop">暂停</button>
+		</div>
+	</div>
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="personData.json"></script>
+	<script src="jackpotData.json"></script>
+	<script>
+		$(function(){
+			
+			
+			initData(data);
+			var t;
+			var stopIndex;
+			var marqueeText = '';
+			var position = 0;
+			// 开始
+			$("#start").stop().click(function(){
+				$("#start").attr("disabled","disabled"); // 禁用开始按钮
+				$("#stop").removeAttr("disabled");
+				initData(data)
+			});
+			// 停止
+			$("#stop").stop().click(function(){
+				$("#start").removeAttr("disabled"); // 禁用开始按钮
+				$("#stop").attr("disabled","disabled");
+				if(jackpotData.length === (position)){
+					$("#start").attr("disabled","disabled");
+					$("#stop").attr("disabled","disabled");
+					alert("奖池已满");
+					return;
+				}
+				clearTimeout(t); // 清除定时
+				var roster = jackpotData[position].name + ' ' + data[stopIndex].name +  ' ' + jackpotData[position].value;
+				marqueeText +=  ' ' + roster;
+				position++;
+				data.splice(stopIndex,1);
+				$(".marqueeText").text(marqueeText);
+				$(".jackpotList").prepend('<div class="jackpotDiv">'+ roster + '</div>'); // 添加奖池
+			});
+			
+			// 初始化数据
+			function initData(data) {
+				var l = data.length;
+				if(l === 0){
+					alert("奖池人数不够");
+					$("#start").attr("disabled","disabled");
+					$("#stop").attr("disabled","disabled");
+					return;
+				}
+				randomNum(l);
+			}
+			// 生成随机数
+			function randomNum(l){
+				var m = 0;
+				var n = l-1;
+				var nums = [];
+				t = setInterval(function(){
+					var sd = parseInt(Math.random()*(n-m+1)+m);//生成一个从 m - n 之间的随机整数
+					$(".personBox img").attr("src", "person/" + data[sd].file);
+					$(".personBox .personName").text(data[sd].name);
+					stopIndex = sd;
+				},100)
+			}
+			
+		})
+		
+	</script>
+</body>
+ 
+</html>

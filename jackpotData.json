@@ -1,0 +1,20 @@
+var jackpotData = [{
+	name: '鼓励奖',
+	value: '蓝牙音箱'
+},
+{
+	name: '三等奖',
+	value: 'ipad一个'
+},
+{
+	name: '二等奖',
+	value: 'iPhone8一部'
+},
+{
+	name: '一等奖',
+	value: '小米电视'
+},
+{
+	name: '特等奖',
+	value: 'iPhoneX一部'
+}];

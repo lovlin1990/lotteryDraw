@@ -1,0 +1,40 @@
+var data = [{
+	name: '张三',
+	file: '张三.jpg'
+},
+{
+	name: '李四',
+	file: '李四.jpg'
+},
+{
+	name: '王五',
+	file: '王五.jpg'
+},
+{
+	name: '测试员',
+	file: '测试员1.jpg'
+},
+{
+	name: '测试员2',
+	file: '测试员2.jpg'
+},
+{
+	name: '测试员3',
+	file: '测试员3.jpg'
+},
+{
+	name: '测试员4',
+	file: '测试员4.jpg'
+},
+{
+	name: '测试员5',
+	file: '测试员5.jpg'
+},
+{
+	name: '测试员6',
+	file: '测试员6.jpg'
+},
+{
+	name: '测试员7',
+	file: '测试员7.jpg'
+}];
